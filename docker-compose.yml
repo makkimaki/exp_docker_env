@@ -1,0 +1,25 @@
+version: '3'
+    
+services:
+  gcp-gpu-container:
+    restart: always
+    image: gcp_gpu_container:latest
+    container_name: gcp_gpu_container
+    build:
+      context: .
+    stdin_open: true
+    tty: true
+    ports:
+      # ssh
+      - "2022:22"
+      # tensorboard
+      - "6006:6006"
+      # jupyterlab
+      - "18888:8888"
+    environment:
+      - TZ: Asia/Tokyo
+    volumes:
+      - /home/makkimaki/work:/root/work
+      - /home/makkimaki/dataset:/root/dataset
+    command: bash /root/startup.sh
+
