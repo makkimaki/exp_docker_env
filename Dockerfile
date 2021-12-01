@@ -2,7 +2,7 @@ FROM nvidia/cuda:11.0.3-cudnn8-runtime-ubuntu18.04
 ENV HOME /root
 
 WORKDIR $HOME  
-COPY ./.bashrc $HOME/
+# COPY ./.bashrc $HOME/
 
 RUN apt-get update && \
     apt-get install -y \
@@ -35,6 +35,9 @@ RUN git config --global user.name "makkimaki" \
 RUN apt-get install -y curl libexpat1-dev gettext \
     && curl -sL https://deb.nodesource.com/setup_15.x | bash - \
     && apt-get -y install nodejs 
+
+EXPOSE 22
+WORKDIR /work/
 
 CMD ["/bin/bash"]
 
