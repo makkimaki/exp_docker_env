@@ -2,6 +2,7 @@ FROM nvidia/cuda:11.0.3-cudnn8-runtime-ubuntu18.04
 ENV HOME /root
 
 WORKDIR $HOME  
+# RUN mkdir -p $HOME/.ssh
 # COPY ./.bashrc $HOME/
 
 RUN apt-get update && \
@@ -21,19 +22,20 @@ RUN apt-get update && \
 
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
+RUN echo 'root:screencast' | chpasswd
 RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
-RUN sed -i 's/#Port 22/Port 20022/' /etc/ssh/sshd_config
+# RUN sed -i 's/#Port 22/Port 20022/' /etc/ssh/sshd_config
 
-# WORKDIR /root 
-# RUN mkdir -p /root/.ssh 
-# ADD makkimaki-mac.pub /root/.ssh/authorized_keys
+WORKDIR /root 
+RUN mkdir -p /root/.ssh 
+ADD makkimaki-mac.pub /root/.ssh/authorized_keys
 # ADD makkimaki-mac.pub /root/.ssh/makkimaki-mac.pub
-# RUN chmod 700 /root/.ssh
-COPY makkimaki-mac.pub /root/authorized_keys
-RUN mkdir ~/.ssh && \
-    mv ~/authorized_keys ~/.ssh/authorized_keys && \
-    chmod 600 ~/.ssh/authorized_keys
 
+# COPY makkimaki-mac.pub /root/authorized_keys
+# RUN mkdir ~/.ssh && \
+# RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
+    # chmod 0600 ~/.ssh/authorized_keys
+RUN chmod 0700 /root/.ssh
 RUN mkdir -p /dataset
 
 RUN git config --global user.name "makkimaki" \
