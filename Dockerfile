@@ -23,7 +23,10 @@ RUN apt-get update && \
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
 RUN echo 'root:screencast' | chpasswd
-RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
+RUN sed -ri 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords no/' /etc/ssh/sshd_config
 # RUN sed -i 's/#Port 22/Port 20022/' /etc/ssh/sshd_config
 
 WORKDIR /root 
@@ -36,6 +39,7 @@ ADD makkimaki-mac.pub /root/.ssh/authorized_keys
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
 RUN chmod 0700 /root/.ssh
+RUN service ssh restart
 RUN mkdir -p /dataset
 
 RUN git config --global user.name "makkimaki" \
@@ -49,6 +53,6 @@ RUN apt-get install -y curl libexpat1-dev gettext \
 EXPOSE 22
 WORKDIR /work/
 
-CMD ["/bin/bash", "/usr/sbin/sshd", "-D"]
+CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
 
     
