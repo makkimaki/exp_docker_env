@@ -1,6 +1,7 @@
 # exp_docker_env
-
-# Basic command
+step  
+1. build the image using this directory (`$ docker build`)
+1. run the container (`$ docker run` or `$docker-compose`)
 ## build image
 ```
 $ docker build -t <tag name> .
