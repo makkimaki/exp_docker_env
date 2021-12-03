@@ -3,7 +3,7 @@ ENV HOME /root
 
 WORKDIR $HOME  
 # RUN mkdir -p $HOME/.ssh
-# COPY ./.bashrc $HOME/
+COPY ./.bashrc $HOME/
 
 RUN apt-get update && \
     apt-get install -y \
@@ -13,12 +13,29 @@ RUN apt-get update && \
     vim \
     git \
     openssh-server openssl python-openssl \
+    make gcc zlib1g-dev bzip2 \
+    libssl-dev libbz2-dev libreadline-dev \
+    libsqlite3-dev \
+    # OpenCV need libGL.so.1
+    libgl1 \
     && apt-get install -y python3 python3-pip \
     && apt install -y language-pack-ja-base apt-utils vim \
     && update-locale LANG=ja_JP.UTF-8 \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 0 \
     && update-alternatives --install /usr/bin/pip pip  /usr/bin/pip3 0 \
     && pip install --upgrade pip 
+
+RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+ENV PYENV_ROOT $HOME/.pyenv 
+ENV PATH $PYENV_ROOT/bin:$PATH 
+ADD .bashrc ~/.bashrc
+# RUN source ~/.bashrc
+RUN eval "$(pyenv init -)"
+RUN eval "$(pyenv virtualenv-init -)"
+RUN pyenv install 3.9.1 && \
+    pyenv global 3.9.1
+
+RUN apt install python3-pip
 
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
