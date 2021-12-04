@@ -49,6 +49,7 @@ RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords no/' /etc/ssh/sshd
 WORKDIR /root 
 RUN mkdir -p /root/.ssh 
 ADD makkimaki-mac.pub /root/.ssh/authorized_keys
+ADD makkimaki-gcp2 /root/.ssh/makkimaki-gcp2
 # ADD makkimaki-mac.pub /root/.ssh/makkimaki-mac.pub
 
 # COPY makkimaki-mac.pub /root/authorized_keys
@@ -69,7 +70,8 @@ RUN apt-get install -y curl libexpat1-dev gettext \
 
 EXPOSE 22
 WORKDIR /work/
-
-CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
+COPY startup.sh /startup.sh
+# CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
+CMD ["/startup.sh"]
 
     
