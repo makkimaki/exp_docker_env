@@ -3,7 +3,11 @@
 . ~/.bashrc
 
 echo "startup: start jupyterlab"
-nohup jupyter lab --allow-root --ip=0.0.0.0 --no-browser &
+# nohup jupyter lab --allow-root --ip=0.0.0.0 --no-browser &
 
-echo "startup: start sshd"
+# for Dockerfile CMD instruction
+/bin/bash 
+echo "service ssh restarintg..."
+/usr/sbin/service ssh restart
+echo "startup: start sshd.."
 /usr/sbin/sshd -D
