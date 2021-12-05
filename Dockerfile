@@ -25,17 +25,26 @@ RUN apt-get update && \
     && update-alternatives --install /usr/bin/pip pip  /usr/bin/pip3 0 \
     && pip install --upgrade pip 
 
-RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-ENV PYENV_ROOT $HOME/.pyenv 
-ENV PATH $PYENV_ROOT/bin:$PATH 
-ADD .bashrc ~/.bashrc
-# RUN source ~/.bashrc
-RUN eval "$(pyenv init -)"
-RUN eval "$(pyenv virtualenv-init -)"
-RUN pyenv install 3.9.1 && \
-    pyenv global 3.9.1
+# RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+# ENV PYENV_ROOT $HOME/.pyenv 
+# ENV PATH $PYENV_ROOT/bin:$PATH 
+# ADD .bashrc ~/.bashrc
+# # RUN source ~/.bashrc
+# RUN eval "$(pyenv init -)"
+# RUN eval "$(pyenv virtualenv-init -)"
+# RUN pyenv install 3.9.1 && \
+#     pyenv global 3.9.1
 
-RUN apt install python3-pip
+WORKDIR /opt
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    sh /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/Miniconda3 && \
+    rm -f Miniconda3-latest-Linux-x86_64.sh 
+ENV PATH /opt/Miniconda3/bin:$PATH 
+
+RUN conda create python=3.7 pip --name conda37
+
+
+# RUN apt install python3-pip
 
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
