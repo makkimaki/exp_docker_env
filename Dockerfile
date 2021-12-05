@@ -28,7 +28,7 @@ RUN apt-get update && \
 # RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 # ENV PYENV_ROOT $HOME/.pyenv 
 # ENV PATH $PYENV_ROOT/bin:$PATH 
-# ADD .bashrc ~/.bashrc
+ADD .bashrc ~/.bashrc
 # # RUN source ~/.bashrc
 # RUN eval "$(pyenv init -)"
 # RUN eval "$(pyenv virtualenv-init -)"
@@ -37,11 +37,12 @@ RUN apt-get update && \
 
 WORKDIR /opt
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    sh /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/Miniconda3 && \
+    sh /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3 && \
     rm -f Miniconda3-latest-Linux-x86_64.sh 
-ENV PATH /opt/Miniconda3/bin:$PATH 
+ENV PATH /opt/miniconda3/bin:$PATH 
+# RUN export PATH=/opt/miniconda3/bin:$PATH 
 
-RUN conda create python=3.7 pip --name conda37
+# RUN conda create python=3.7 pip --name conda37
 
 
 # RUN apt install python3-pip
@@ -66,7 +67,7 @@ ADD makkimaki-gcp2 /root/.ssh/makkimaki-gcp2
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
 RUN chmod 0700 /root/.ssh
-RUN service ssh restart
+# RUN service ssh restart
 RUN mkdir -p /dataset
 
 RUN git config --global user.name "makkimaki" \
