@@ -7,7 +7,7 @@ echo "startup: start jupyterlab"
 
 # for Dockerfile CMD instruction
 /bin/bash 
-echo "service ssh restarintg..."
-/usr/sbin/service ssh restart
 echo "startup: start sshd.."
 /usr/sbin/sshd -D
+echo "service ssh restarintg..."
+/usr/sbin/service ssh restart
