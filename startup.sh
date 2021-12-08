@@ -6,7 +6,7 @@ echo "startup: start jupyterlab"
 # nohup jupyter lab --allow-root --ip=0.0.0.0 --no-browser &
 
 # conda virtual env setup
-/opt/miniconda3/condabin/conda create -y python=3.7 pip --name conda37
+/opt/miniconda3/condabin/conda create -y python=3.9 pip --name conda37
 
 # for Dockerfile CMD instruction
 /bin/bash 
