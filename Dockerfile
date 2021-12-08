@@ -36,11 +36,13 @@ ADD .bashrc ~/.bashrc
 #     pyenv global 3.9.1
 
 WORKDIR /opt
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    sh /opt/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3 && \
-    rm -f Miniconda3-latest-Linux-x86_64.sh 
-ENV PATH /opt/miniconda3/bin:$PATH 
-# RUN export PATH=/opt/miniconda3/bin:$PATH 
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
+    sh /opt/Miniconda3-py39_4.10.3-Linux-x86_64.sh -b -p /opt/miniconda3 && \
+    rm -f Miniconda3-py39_4.10.3-Linux-x86_64.sh
+ENV PATH $PATH:/opt/miniconda3/bin 
+# $PATH:/root/anaconda3/bin
+
+RUN export PATH=/opt/miniconda3/bin:$PATH > ~/.bashrc
 
 # RUN conda create python=3.7 pip --name conda37
 
@@ -82,7 +84,7 @@ EXPOSE 22
 WORKDIR /work/
 COPY startup.sh /startup.sh
 # CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
-ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.7 pip --name conda37 && bash
+ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.9.1 pip --name conda39 && bash
 CMD ["/startup.sh"]
 
     
