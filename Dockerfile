@@ -12,6 +12,7 @@ RUN apt-get update && \
     curl \
     vim \
     git \
+    unzip \
     openssh-server openssl python-openssl \
     make gcc zlib1g-dev bzip2 \
     libssl-dev libbz2-dev libreadline-dev \
@@ -28,7 +29,7 @@ RUN apt-get update && \
 # RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 # ENV PYENV_ROOT $HOME/.pyenv 
 # ENV PATH $PYENV_ROOT/bin:$PATH 
-ADD .bashrc ~/.bashrc
+# ADD .bashrc ~/.bashrc
 # # RUN source ~/.bashrc
 # RUN eval "$(pyenv init -)"
 # RUN eval "$(pyenv virtualenv-init -)"
@@ -39,10 +40,12 @@ WORKDIR /opt
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
     sh /opt/Miniconda3-py39_4.10.3-Linux-x86_64.sh -b -p /opt/miniconda3 && \
     rm -f Miniconda3-py39_4.10.3-Linux-x86_64.sh
-ENV PATH $PATH:/opt/miniconda3/bin 
+# set path
+ENV PATH /opt/miniconda3/bin:$PATH
+# ENV PATH $PATH:/opt/miniconda3/bin 
 # $PATH:/root/anaconda3/bin
 
-RUN export PATH=/opt/miniconda3/bin:$PATH > ~/.bashrc
+RUN export PATH=/opt/miniconda3/bin:$PATH >> ~/.bashrc
 
 # RUN conda create python=3.7 pip --name conda37
 
@@ -51,7 +54,7 @@ RUN export PATH=/opt/miniconda3/bin:$PATH > ~/.bashrc
 
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
-RUN echo 'root:screencast' | chpasswd
+# RUN echo 'root:screencast' | chpasswd
 RUN sed -ri 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
