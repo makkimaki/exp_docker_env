@@ -60,10 +60,12 @@ RUN sed -ri 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/ss
 RUN sed -ri 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords no/' /etc/ssh/sshd_config
 # RUN sed -i 's/#Port 22/Port 20022/' /etc/ssh/sshd_config
+ENV NOTVISIBLE "in users profile" 
+RUN echo "export VISIBLE=now" >> /etc/profile
 
-WORKDIR /root 
-RUN mkdir -p /root/.ssh 
-ADD .ssh /root/.ssh
+WORKDIR $HOME
+RUN mkdir -p $HOME/.ssh 
+ADD .ssh $HOME/.ssh
 # ADD makkimaki-gcp2 /root/.ssh/makkimaki-gcp2
 # ADD makkimaki-mac.pub /root/.ssh/makkimaki-mac.pub
 
@@ -71,7 +73,7 @@ ADD .ssh /root/.ssh
 # RUN mkdir ~/.ssh && \
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
-RUN chmod 0700 /root/.ssh
+RUN chmod 0700 $HOME/.ssh
 # RUN service ssh restart
 RUN mkdir -p /dataset
 
