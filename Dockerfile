@@ -66,10 +66,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 WORKDIR $HOME
 RUN mkdir -p $HOME/.ssh 
 ADD .ssh $HOME/.ssh
-# ADD makkimaki-gcp2 /root/.ssh/makkimaki-gcp2
-# ADD makkimaki-mac.pub /root/.ssh/makkimaki-mac.pub
-
-# COPY makkimaki-mac.pub /root/authorized_keys
 # RUN mkdir ~/.ssh && \
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
@@ -89,7 +85,7 @@ EXPOSE 22
 WORKDIR /work/
 COPY startup.sh /startup.sh
 # CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
-ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.9.1 pip --name conda39 && bash
-CMD ["/startup.sh"]
+# ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.9.1 pip --name conda39 && bash
+CMD ["bash", "/startup.sh"]
 
     
