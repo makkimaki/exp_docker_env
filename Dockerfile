@@ -2,7 +2,6 @@ FROM nvidia/cuda:11.0.3-cudnn8-runtime-ubuntu18.04
 ENV HOME /root
 
 WORKDIR $HOME  
-# RUN mkdir -p $HOME/.ssh
 COPY ./.bashrc $HOME/
 
 RUN apt-get update && \
@@ -42,15 +41,9 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64
     rm -f Miniconda3-py39_4.10.3-Linux-x86_64.sh
 # set path
 ENV PATH /opt/miniconda3/bin:$PATH
-# ENV PATH $PATH:/opt/miniconda3/bin 
-# $PATH:/root/anaconda3/bin
-
 RUN echo 'export PATH=/opt/miniconda3/bin:$PATH' >> ~/.bashrc
 
-# RUN conda create python=3.7 pip --name conda37
 
-
-# RUN apt install python3-pip
 
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
@@ -70,7 +63,6 @@ ADD .ssh $HOME/.ssh
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
 RUN chmod 0700 $HOME/.ssh
-# RUN service ssh restart
 RUN mkdir -p /dataset
 
 RUN git config --global user.name "makkimaki" \
@@ -83,6 +75,7 @@ RUN apt-get install -y curl libexpat1-dev gettext \
 
 EXPOSE 22
 WORKDIR /work/
+ADD requirements.txt /work/requirements.txt
 COPY startup.sh /startup.sh
 # CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
 # ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.9.1 pip --name conda39 && bash
