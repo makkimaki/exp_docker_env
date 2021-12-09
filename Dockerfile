@@ -45,7 +45,7 @@ ENV PATH /opt/miniconda3/bin:$PATH
 # ENV PATH $PATH:/opt/miniconda3/bin 
 # $PATH:/root/anaconda3/bin
 
-RUN export PATH=/opt/miniconda3/bin:$PATH >> ~/.bashrc
+RUN echo 'export PATH=/opt/miniconda3/bin:$PATH' >> ~/.bashrc
 
 # RUN conda create python=3.7 pip --name conda37
 
@@ -87,5 +87,3 @@ COPY startup.sh /startup.sh
 # CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
 # ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.9.1 pip --name conda39 && bash
 CMD ["bash", "/startup.sh"]
-
-    
