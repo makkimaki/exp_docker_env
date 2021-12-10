@@ -2,7 +2,6 @@ FROM nvidia/cuda:11.0.3-cudnn8-runtime-ubuntu18.04
 ENV HOME /root
 
 WORKDIR $HOME  
-# RUN mkdir -p $HOME/.ssh
 COPY ./.bashrc $HOME/
 
 RUN apt-get update && \
@@ -12,6 +11,7 @@ RUN apt-get update && \
     curl \
     vim \
     git \
+    unzip \
     openssh-server openssl python-openssl \
     make gcc zlib1g-dev bzip2 \
     libssl-dev libbz2-dev libreadline-dev \
@@ -25,39 +25,44 @@ RUN apt-get update && \
     && update-alternatives --install /usr/bin/pip pip  /usr/bin/pip3 0 \
     && pip install --upgrade pip 
 
-RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-ENV PYENV_ROOT $HOME/.pyenv 
-ENV PATH $PYENV_ROOT/bin:$PATH 
-ADD .bashrc ~/.bashrc
-# RUN source ~/.bashrc
-RUN eval "$(pyenv init -)"
-RUN eval "$(pyenv virtualenv-init -)"
-RUN pyenv install 3.9.1 && \
-    pyenv global 3.9.1
+# RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+# ENV PYENV_ROOT $HOME/.pyenv 
+# ENV PATH $PYENV_ROOT/bin:$PATH 
+# ADD .bashrc ~/.bashrc
+# # RUN source ~/.bashrc
+# RUN eval "$(pyenv init -)"
+# RUN eval "$(pyenv virtualenv-init -)"
+# RUN pyenv install 3.9.1 && \
+#     pyenv global 3.9.1
 
-RUN apt install python3-pip
+WORKDIR /opt
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
+    sh /opt/Miniconda3-py39_4.10.3-Linux-x86_64.sh -b -p /opt/miniconda3 && \
+    rm -f Miniconda3-py39_4.10.3-Linux-x86_64.sh
+# set path
+ENV PATH /opt/miniconda3/bin:$PATH
+RUN echo 'export PATH=/opt/miniconda3/bin:$PATH' >> ~/.bashrc
+
+
 
 RUN apt-get install -y ssh \
     && mkdir /var/run/sshd 
-RUN echo 'root:screencast' | chpasswd
+# RUN echo 'root:screencast' | chpasswd
 RUN sed -ri 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 RUN sed -ri 's/^#PermitEmptyPasswords no/PermitEmptyPasswords no/' /etc/ssh/sshd_config
 # RUN sed -i 's/#Port 22/Port 20022/' /etc/ssh/sshd_config
+ENV NOTVISIBLE "in users profile" 
+RUN echo "export VISIBLE=now" >> /etc/profile
 
-WORKDIR /root 
-RUN mkdir -p /root/.ssh 
-ADD makkimaki-mac.pub /root/.ssh/authorized_keys
-ADD makkimaki-gcp2 /root/.ssh/makkimaki-gcp2
-# ADD makkimaki-mac.pub /root/.ssh/makkimaki-mac.pub
-
-# COPY makkimaki-mac.pub /root/authorized_keys
+WORKDIR $HOME
+RUN mkdir -p $HOME/.ssh 
+ADD .ssh $HOME/.ssh
 # RUN mkdir ~/.ssh && \
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
-RUN chmod 0700 /root/.ssh
-RUN service ssh restart
+RUN chmod 0700 $HOME/.ssh
 RUN mkdir -p /dataset
 
 RUN git config --global user.name "makkimaki" \
@@ -70,8 +75,8 @@ RUN apt-get install -y curl libexpat1-dev gettext \
 
 EXPOSE 22
 WORKDIR /work/
+ADD requirements.txt /work/requirements.txt
 COPY startup.sh /startup.sh
 # CMD ["/bin/bash", "/usr/sbin/sshd", "-D", "/usr/sbin/service", "ssh", "restart"]
-CMD ["/startup.sh"]
-
-    
+# ENTRYPOINT service ssh restart && /opt/miniconda3/condabin/conda create -y python=3.9.1 pip --name conda39 && bash
+CMD ["bash", "/startup.sh"]
