@@ -4,7 +4,7 @@ services:
   nishika_image_search-container:
     restart: always
     image: nishika_image_search:latest
-    container_name: nishika_image_search
+    container_name: nishika_image_search-container
     build: .
     stdin_open: true
     tty: true
@@ -18,7 +18,7 @@ services:
     # environment:
     #   - TZ: Asia/Tokyo
     volumes:
-      - /home/makkimaki/work:/root/work
-      - /home/makkimaki/dataset:/root/dataset
-    command: /bin/bash /startup.sh
+      - /home/makkimaki/work:/work
+      - /home/makkimaki/dataset:/dataset
+    command: bash /startup.sh
 
