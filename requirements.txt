@@ -3,7 +3,7 @@ certifi==2021.10.8
 imageio==2.13.2
 joblib==1.1.0
 networkx==2.6.3
-nmslib==2.1.1
+# nmslib==2.1.1
 numpy==1.21.4
 opencv-python==4.5.4.60
 opencv-python-headless==4.5.4.60
