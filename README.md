@@ -3,12 +3,13 @@ step
 1. build the image using this directory (`$ docker build`)
 1. run the container (`$ docker run` or `$ docker-compose`)
 
+# docker command based setting
 ## directory setting
 ### Host server
--unser construction
+- _unser construction_
 
 ### Container server
--under construction
+- _under construction_
 
 ## build image
 ```
@@ -20,14 +21,24 @@ When it is finished, you can see the named tag via `$docker images`.
 ```
 $ docker run --rm --gpus all -v ~/work:/work -p <host port>:22 -it <container name> bash
 ```
-Then you finally go inside the container. At this step, execute the following command inside the container. 
+
+
+# docker-compose command based setting
+Instead of executing the `$docker` command, you can use `docker-compose` based environment building.
+
+## build image
+After switching to the `exp_docker_env` directory, 
 ```
-or, you can try the following. 
+$ docker-compose build 
+```
+## run the container
 ```
 $ docker-compose up -d 
 ```
-
-
-$ service ssh restart
+## confirm the container (optional)
 ```
+$ docker-compose ps
+```
+You can find the tagged container.
+
 Now you can SSH to the container!
