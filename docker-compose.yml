@@ -6,6 +6,10 @@ services:
     image: nishika_image_search:latest
     container_name: nishika_image_search-container
     build: .
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     stdin_open: true
     tty: true
     ports:
