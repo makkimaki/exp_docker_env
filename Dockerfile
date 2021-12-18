@@ -41,7 +41,7 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64
     rm -f Miniconda3-py39_4.10.3-Linux-x86_64.sh
 # set path
 ENV PATH /opt/miniconda3/bin:$PATH
-RUN echo 'export PATH=/opt/miniconda3/bin:$PATH' >> ~/.bashrc
+RUN echo -e '\n export PATH=/opt/miniconda3/bin:$PATH' >> ~/.bashrc
 
 
 
