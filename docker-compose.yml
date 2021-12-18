@@ -5,9 +5,8 @@ services:
     restart: always
     image: nishika_image_search:latest
     container_name: nishika_image_search-container
-    build: 
-      context: .
-      shm_size: '2gb'
+    build: .
+    shm_size: '2gb'
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
