@@ -24,7 +24,7 @@ $ docker run --rm --gpus all -v ~/work:/work -p <host port>:22 -it <container na
 
 
 # docker-compose command based setting
-Instead of executing the `$docker` command, you can use `docker-compose` based environment building. The version is supposed to be above `1.29.x` as following.
+Instead of executing the `$docker` command, you can use `docker-compose` based environment building. The version is expected to have above `1.29.x` as following.
 ```
 $ docker-compose --version
 docker-compose version 1.29.1, build c34c88b2
@@ -35,10 +35,13 @@ After switching to the `exp_docker_env` directory,
 ```
 $ docker-compose build 
 ```
+
 ## run the container
 ```
 $ docker-compose up -d 
 ```
+If you still don't have any built image, this operation will take you from building the container image to running it.
+
 ## confirm the container (optional)
 ```
 $ docker-compose ps
