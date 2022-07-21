@@ -83,3 +83,22 @@ $ docker-compose ps
 You can find the tagged container.
 
 Now you can SSH to the container!
+
+
+# Other
+## Virtual Environment (Inside the docker container)
+It uses "conda" virtual environment.
+### make new env.
+```
+conda create python=3.9 --name <env. name>
+```
+
+### activation & deactivation
+**activation**
+```
+source activate <env. name>
+```
+**deactivation**
+```
+conda deactivate 
+```
