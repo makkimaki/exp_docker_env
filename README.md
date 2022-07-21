@@ -29,6 +29,10 @@ $ git clone git@github.com:makkimaki/exp_docker_env.git
 - modify `.bashrc` like this: `ssh-add -k ~/.ssh/<private key name>`
 
 # exp_docker_env
+### Prerequisites
+- docker-compose >= 1.29.x
+    * In order to use docker-compose.yml `runtime: nvidia` option!
+
 step  
 1. build the image using this directory (`$ docker build`)
 1. run the container (`$ docker run` or `$ docker-compose`)
