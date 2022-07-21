@@ -1,10 +1,10 @@
 version: '3'
     
 services:
-  nishika_image_search-container:
+  aws_gpu_container_service:
     restart: always
-    image: nishika_image_search:latest
-    container_name: nishika_image_search-container
+    image: aws_gpu_container_image:latest
+    container_name: aws_gpu_container
     build: .
     shm_size: '2gb'
     runtime: nvidia
@@ -23,7 +23,7 @@ services:
     # environment:
     #   - TZ: Asia/Tokyo
     volumes:
-      - /home/makkimaki/work:/work
-      - /home/makkimaki/dataset:/dataset
+      - /home/ubuntu/work:/work
+      - /home/ubuntu/data:/data
     command: bash /startup.sh
 
