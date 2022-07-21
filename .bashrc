@@ -4,7 +4,7 @@ export LANG=ja_JP.UTF-8
 
 # container ssh agent setup
 eval $(ssh-agent -s)
-ssh-add -k ~/.ssh/makkimaki-gcp2
+ssh-add -k ~/.ssh/id_ed25519_aws
 # eval "$(ssh -T git@github.com)"
 
 # vscode code command path
