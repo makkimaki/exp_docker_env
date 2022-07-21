@@ -5,7 +5,9 @@ $ ssh-keygen -t ed25519 -C "<email>"
 $ eval "$(ssh-agent -s)"
 $ vi ~/.ssh/config
 ```
-Edit the ssh config file as below.
+Edit the ssh config file as below.  
+
+`~/.ssh/config`
 ```
 Host * 
     AddKeysToAgent yes
@@ -21,9 +23,10 @@ Clone this repository into your Ubuntu based linux environment.
 $ git clone git@github.com:makkimaki/exp_docker_env.git
 ```
 
-# After cloning this repo. into local
- _underconstruction_
-
+# After cloning this repo into local env.
+- prepare the `.ssh` directory
+- copy the private key into this `.ssh` directory
+- modify `.bashrc` like this: `ssh-add -k ~/.ssh/<private key name>`
 
 # exp_docker_env
 step  
