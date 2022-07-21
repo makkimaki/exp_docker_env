@@ -63,7 +63,7 @@ ADD .ssh $HOME/.ssh
 # RUN mv ~/authorized_keys ~/.ssh/authorized_keys && \
     # chmod 0600 ~/.ssh/authorized_keys
 RUN chmod 0700 $HOME/.ssh
-RUN mkdir -p /dataset
+RUN mkdir -p /data
 
 RUN git config --global user.name "makkimaki" \
     && git config --global user.email "shellingford-93.4.2@hotmail.co.jp"
