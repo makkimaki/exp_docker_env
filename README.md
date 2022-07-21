@@ -1,3 +1,30 @@
+# Preparation
+## GitHub key registration & setup
+```
+$ ssh-keygen -t ed25519 -C "<email>"
+$ eval "$(ssh-agent -s)"
+$ vi ~/.ssh/config
+```
+Edit the ssh config file as below.
+```
+Host * 
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
+```
+```
+$ ssh-add -k ~/.ssh/id_ed25519
+```
+
+## Clone the repository
+Clone this repository into your Ubuntu based linux environment.
+```
+$ git clone git@github.com:makkimaki/exp_docker_env.git
+```
+
+# After cloning this repo. into local
+ _underconstruction_
+
+
 # exp_docker_env
 step  
 1. build the image using this directory (`$ docker build`)
@@ -6,7 +33,7 @@ step
 # docker command based setting
 ## directory setting
 ### Host server
-- _unser construction_
+- _under construction_
 
 ### Container server
 - _under construction_
