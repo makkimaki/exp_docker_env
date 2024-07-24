@@ -1,3 +1,9 @@
+This is the nvidia GPU environment instruction. Some premises are the following.
+- Ubuntu-LTS(debian) based virtual machine.
+- Aiming for deeplearning with python environment.
+- RemoteSSH with VScode.
+- Before this instruction, you need to install the nvidia driver.
+  
 # Preparation
 ## GitHub key registration & setup
 ```
